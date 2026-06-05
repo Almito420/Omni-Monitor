@@ -1,0 +1,6 @@
+﻿target/
+*.exe
+*.conf
+*.orig
+*.patch
+omni_support.patch

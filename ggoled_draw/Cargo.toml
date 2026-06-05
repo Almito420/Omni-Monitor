@@ -1,0 +1,13 @@
+[package]
+name = "ggoled_draw"
+version.workspace = true
+edition = "2024"
+
+[dependencies]
+ggoled_lib = { path = "../ggoled_lib" }
+
+anyhow = "1.0"
+image = { version = "0.25", features = ["gif"] }
+parking_lot = "0.12"
+rusttype = "0.9"
+spin_sleep = "1.3"

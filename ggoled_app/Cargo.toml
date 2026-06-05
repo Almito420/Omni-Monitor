@@ -1,0 +1,40 @@
+[package]
+name = "ggoled_app"
+version.workspace = true
+edition = "2024"
+
+[features]
+sdl3-static = ["sdl3-sys/build-from-source-static"]
+
+[dependencies]
+ggoled_lib = { path = "../ggoled_lib" }
+ggoled_draw = { path = "../ggoled_draw" }
+
+anyhow = "1"
+chrono = "0.4"
+directories = "6"
+image = "0.25"
+rfd = "0.17"
+sdl3-sys = { version = "0.6" }
+serde = { version = "1", features = ["derive"] }
+toml = "1"
+
+[target.'cfg(windows)'.dependencies]
+windows = { version = "0.62.2", features = ["Media_Control"] }
+windows-sys = { version = "0.61.2", features = [
+    "Win32_System_SystemInformation",
+    "Win32_System_Console",
+    "Win32_UI_Input",
+    "Win32_UI_Input_KeyboardAndMouse",
+] }
+
+[target.'cfg(target_os = "windows")'.build-dependencies]
+winresource = "0.1.30"
+
+[target.'cfg(target_os = "linux")'.dependencies]
+mpris = "2"
+wayland-client = "0.31"
+wayland-protocols = { version = "0.32", features = ["client", "staging"] }
+
+[target.'cfg(target_os = "macos")'.dependencies]
+media-remote = "0.3.6"

@@ -1,0 +1,16 @@
+[package]
+name = "ggoled"
+version.workspace = true
+edition = "2024"
+
+[features]
+# Dummy to simplify installs
+sdl3-static = []
+
+[dependencies]
+ggoled_lib = { path = "../ggoled_lib" }
+ggoled_draw = { path = "../ggoled_draw" }
+
+anyhow = "1"
+clap = { version = "4", features = ["derive"] }
+spin_sleep = "1"
