@@ -1,6 +1,3 @@
 ﻿target/
-*.exe
-*.conf
-*.orig
-*.patch
+ggoled_lib/src/lib.rs.orig
 omni_support.patch
