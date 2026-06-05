@@ -1,0 +1,18 @@
+[package]
+name = "omni_monitor"
+version.workspace = true
+edition = "2024"
+
+[dependencies]
+ggoled_lib = { path = "../ggoled_lib" }
+anyhow    = "1"
+hidapi    = "2"
+fontdue   = "0.9"
+spin_sleep = "1"
+winapi = { version = "0.3", features = [
+    "fileapi", "handleapi", "memoryapi",
+    "winuser", "minwindef", "windef",
+    "processthreadsapi", "libloaderapi",
+    "sysinfoapi", "pdh",
+    "dxgi",
+] }
