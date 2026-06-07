@@ -106,7 +106,7 @@ fn main() -> anyhow::Result<()> {
                     Err(_) => { dev = None; }
                     _ => {}
                 }
-                thread::sleep(Duration::from_millis(50));
+                thread::sleep(Duration::from_secs(60));
             }
         });
     }
@@ -130,6 +130,27 @@ fn main() -> anyhow::Result<()> {
         let screen_on = Arc::clone(&screen_on);
         thread::spawn(move || monitor::run(screen_on));
     }
+
+    // ── ntfy.sh shutdown listener ─────────────────────────────────────────
+    thread::spawn(|| {
+        loop {
+            if let Ok(resp) = ureq::get("https://ntfy.sh/shutdown-almito-king420/raw").call() {
+                use std::io::BufRead;
+                let reader = std::io::BufReader::new(resp.into_reader());
+                for line in reader.lines() {
+                    if let Ok(l) = line {
+                        if !l.trim().is_empty() {
+                            let _ = std::process::Command::new("shutdown")
+                                .args(["/s", "/t", "0"])
+                                .spawn();
+                            return;
+                        }
+                    }
+                }
+            }
+            thread::sleep(Duration::from_secs(5));
+        }
+    });
 
     // ── Main render loop ──────────────────────────────────────────────────
     let cfg      = config::load();

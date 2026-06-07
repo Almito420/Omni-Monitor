@@ -9,6 +9,7 @@ anyhow    = "1"
 hidapi    = "2"
 fontdue   = "0.9"
 spin_sleep = "1"
+ureq      = "2"
 winapi = { version = "0.3", features = [
     "fileapi", "handleapi", "memoryapi",
     "winuser", "minwindef", "windef",

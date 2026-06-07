@@ -1,4 +1,4 @@
-﻿<div align="center">
+<div align="center">
 
 # Omni Monitor
 
@@ -25,6 +25,20 @@ Every value updates in real time. The display blanks automatically when the moni
 
 ---
 
+## Features
+
+- Zero runtime dependencies -- single `.exe`, copy and run
+- Silent background process -- no console window
+- Auto-start support via Windows Startup folder or Task Scheduler
+- OLED burn-in prevention -- 9-position pixel shift (90 s/step), ported from [ggoled](https://github.com/JerwuQu/ggoled)
+- Monitor sleep detection -- display blanks via `RegisterPowerSettingNotification`
+- Configurable brightness (0-100%) via `omni_monitor.conf`
+- Auto-reconnect after USB disconnect
+- **Remote shutdown listener** -- listens to an [ntfy.sh](https://ntfy.sh) topic and shuts down Windows when a message arrives; always active regardless of display state
+- ~1% CPU usage, ~5 MB RAM footprint
+
+---
+
 ## Data sources
 
 | Row | Value | Source |
@@ -40,16 +54,19 @@ Every value updates in real time. The display blanks automatically when the moni
 
 ---
 
-## Features
+## Remote shutdown
 
-- Zero runtime dependencies -- single `.exe`, copy and run
-- Silent background process -- no console window
-- Auto-start support via Windows Startup folder or Task Scheduler
-- OLED burn-in prevention -- 9-position pixel shift (90 s/step), ported from [ggoled](https://github.com/JerwuQu/ggoled)
-- Monitor sleep detection -- display blanks via `RegisterPowerSettingNotification`
-- Configurable brightness (0-100%) via `omni_monitor.conf`
-- Auto-reconnect after USB disconnect
-- ~1% CPU usage, ~5 MB RAM footprint
+Omni Monitor includes a built-in shutdown listener. While running, it maintains a persistent connection to an [ntfy.sh](https://ntfy.sh) topic. When any message arrives on that topic, Windows shuts down immediately (`shutdown /s /t 0`).
+
+The listener runs independently of the display state -- it stays active even when the OLED is blank and all hardware polling is paused.
+
+The topic is hardcoded to `shutdown-almito-king420`. To trigger a shutdown from anywhere:
+
+```bash
+curl -d "shutdown" https://ntfy.sh/shutdown-almito-king420
+```
+
+Or via any HTTP client, automation platform (Pipedream, Make.com, IFTTT, etc.), or voice assistant integration.
 
 ---
 
@@ -120,12 +137,12 @@ Edit the value, save, and restart the exe. Brightness is mapped to the device's 
 
 ## Building from source
 
-Requires [Rust stable](https://rustup.rs).
+Requires [Rust stable](https://rustup.rs) with the MSVC toolchain (`stable-x86_64-pc-windows-msvc`).
 
 ```bash
 git clone https://github.com/Almito420/Omni-Monitor.git
 cd Omni-Monitor
-cargo build --release --package omni_monitor
+cargo +stable-x86_64-pc-windows-msvc build --release --package omni_monitor
 # output: target/release/omni_monitor.exe
 ```
 
@@ -134,7 +151,7 @@ cargo build --release --package omni_monitor
 ```
 Omni-Monitor/
 |-- omni_monitor/src/
-|   |-- main.rs       threads, render loop, reconnect
+|   |-- main.rs       threads, render loop, reconnect, ntfy shutdown listener
 |   |-- argus.rs      Argus Monitor shared memory reader
 |   |-- vram.rs       VRAM % via DXGI + PDH
 |   |-- sysinfo.rs    RAM % via GlobalMemoryStatusEx
