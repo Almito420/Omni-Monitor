@@ -2,7 +2,7 @@
 
 # Omni Monitor
 
-**Standalone OLED hardware monitor for the SteelSeries Nova Pro Wireless GameDAC**
+**Standalone OLED hardware monitor for the SteelSeries Nova Pro Wireless GameDAC (Nova Pro Omni Version)**
 
 Real-time CPU, GPU, RAM, VRAM and battery stats on the GameDAC's 128x64 OLED display.
 No SteelSeries GG. No Python. No dependencies. Single `.exe`, ~550 KB.
