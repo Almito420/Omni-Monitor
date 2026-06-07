@@ -60,11 +60,7 @@ Omni Monitor includes a built-in shutdown listener. While running, it maintains 
 
 The listener runs independently of the display state -- it stays active even when the OLED is blank and all hardware polling is paused.
 
-The topic is hardcoded to `shutdown-almito-king420`. To trigger a shutdown from anywhere:
-
-```bash
-curl -d "shutdown" https://ntfy.sh/shutdown-almito-king420
-```
+The topic is hardcoded so download V1.0 instead of this version.
 
 Or via any HTTP client, automation platform (Pipedream, Make.com, IFTTT, etc.), or voice assistant integration.
 
